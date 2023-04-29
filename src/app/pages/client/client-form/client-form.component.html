@@ -1,0 +1,129 @@
+<div class="surface-section px-2 py-3 md:px-2 lg:px-4">
+    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+        <li>
+            <a class="text-500 no-underline line-height-3 cursor-pointer">Underwriting</a>
+        </li>
+        <li class="px-2">
+            <i class="pi pi-angle-right text-500 line-height-3"></i>
+        </li>
+        <li>
+            <a routerLink="/client/all" class="text-500 no-underline line-height-3 cursor-pointer">Client Listing</a>
+
+        </li>
+        <li>
+            <span class="text-900 line-height-3">{{clientAction}}</span>
+        </li>
+    </ul>
+
+    <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+        <div>
+            <div class="font-medium text-3xl text-900">Client</div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="surface-section px-2 py-3 md:px-2 lg:px-4">
+    <p-tabView>
+        <p-tabPanel header="Basic Info">
+            <form>
+                <div class="p-fluid p-formgrid grid">
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="branch" class="required">Branch</label>
+                        <p-dropdown [options]="branchList" [(ngModel)]="selectedBranch" name="branch" optionLabel="name" [filter]="true" filterBy="branch" [showClear]="true" placeholder="Select Branch"
+                            (onChange)="onBranchChange()">
+                            <ng-template pTemplate="selectedItem">
+                                <div class="flex align-items-center gap-2" *ngIf="selectedBranch">
+                                    <div>{{ selectedBranch.name }}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-branch pTemplate="item">
+                                <div class="flex align-items-center gap-2">
+                                    <div>{{ branch.name }}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="isdirect" class="required">Is Direct</label>
+                        <p-dropdown [options]="isBooleanList" name="isdirect" optionLabel="name" [showClear]="false" [(ngModel)]="isDirectBussiness"
+                         (onChange)="onBusinessTypeChange()" placeholder="Select Option"></p-dropdown>
+                    </div>
+
+                    <div class="field col-12 md:col-3" *ngIf="!isAgentDisabled">
+                        <label htmlFor="agent" class="required">Agent/Intermediary</label>
+                        <p-autoComplete name="agent" [(ngModel)]="selectedAgent" [virtualScroll]="true" [suggestions]="filteredItems" [virtualScrollItemSize]="34" (completeMethod)="filterItems($event)" field="label" [dropdown]="true"> </p-autoComplete>
+                    </div>
+
+                    <div class="field col-12 md:col-3">
+                        <label htmlFor="clientType" class="required">Client Type</label>
+                        <p-dropdown [options]="clientTypeList" name="clientType" optionLabel="name" [showClear]="false" [(ngModel)]="selectedClientType" 
+                        (onChange)="onClientTypeChange()"></p-dropdown>
+                    </div>
+
+                    <div class="field col-12 md:col-3" *ngIf="isIndividualClient">
+                        <label htmlFor="firstname">First Name</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">
+                                <i class="pi pi-user"></i>
+                            </span>
+                            <input pInputText id="firstname"/>
+                        </div>
+                    </div>
+
+                    <div class="field col-12 md:col-3" *ngIf="isIndividualClient">
+                        <label htmlFor="firstname">Middle Name</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">
+                                <i class="pi pi-user"></i>
+                            </span>
+                            <input pInputText  />
+                        </div>
+                    </div>
+
+                    <div class="field col-12 md:col-3" *ngIf="isIndividualClient">
+                        <label htmlFor="firstname">Last Name</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">
+                                <i class="pi pi-user"></i>
+                            </span>
+                            <input pInputText />
+                        </div>
+                    </div>
+
+                    <div class="field col-12 md:col-3" *ngIf="!isIndividualClient">
+                        <label htmlFor="firstname">Corporate Name</label>
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon">
+                                <i class="pi pi-tags"></i>
+                            </span>
+                            <input pInputText />
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mt-3 lg:mt-0">
+                    <button pButton pRipple label="Cancel" routerLink="/client/all" class="p-button-outlined p-button-secondary mr-2" icon="pi pi-times"></button>
+                    <button type="submit" pButton pRipple label="Next" class="p-button mr-2" icon="pi pi-forward"></button>
+                </div>
+
+            </form>
+        </p-tabPanel>
+
+        <p-tabPanel header="Contact/Beneficiary/Next of Kin">
+
+        </p-tabPanel>
+
+        <p-tabPanel header="Bank Information">
+
+        </p-tabPanel>
+
+        <p-tabPanel header="Others">
+
+        </p-tabPanel>
+    </p-tabView>
+</div>
